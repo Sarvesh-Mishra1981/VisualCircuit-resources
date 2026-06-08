@@ -59,6 +59,12 @@ def validate_level_2(data):
         if nid not in wired_blocks:
             raise ValueError(f"Error (Level 2): Found a disconnected basic.output node. Please wire it up.")
             
+    # If there is more than 1 block, make sure NO block is left floating disconnected!
+    if len(blocks) > 1:
+        for b in blocks:
+            if b["id"] not in wired_blocks:
+                raise ValueError(f"Error (Level 2): Found a disconnected block '{b.get('type')}'. All blocks must be wired to something!")
+            
     print("Structure and wires are valid.")
 
 def validate_level_3(data):
