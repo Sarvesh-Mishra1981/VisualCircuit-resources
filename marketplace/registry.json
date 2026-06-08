@@ -1,6 +1,19 @@
 {
   "blocks": [
     {
+      "id": "test_correctblock",
+      "name": "test_correctbock",
+      "author": "Jmpalza",
+      "version": "1.2.3",
+      "description": "a test block",
+      "category": "Locomotion",
+      "tags": [
+        "cv2",
+        "ros2"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test_correctblock.vc3"
+    },
+    {
       "id": "test2_final",
       "name": "Line Follower PID",
       "author": "Sarvesh Mishra _1981",
