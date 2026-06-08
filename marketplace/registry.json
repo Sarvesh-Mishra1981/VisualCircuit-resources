@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "id": "Line_ Follower_PID",
+      "id": "test1",
       "name": "Line Follower PID",
       "author": "Sarvesh Mishra _1981",
       "version": "1.0.0",
@@ -12,7 +12,7 @@
         "line follower",
         "control"
       ],
-      "url": "/blocks/Line_ Follower_PID.vc3"
+      "url": "/blocks/test1.vc3"
     }
   ]
 }
