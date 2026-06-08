@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "id": "test1",
+      "id": "test2_final",
       "name": "Line Follower PID",
       "author": "Sarvesh Mishra _1981",
       "version": "1.0.0",
@@ -12,7 +12,7 @@
         "line follower",
         "control"
       ],
-      "url": "/blocks/test1.vc3"
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test2_final.vc3"
     }
   ]
 }
