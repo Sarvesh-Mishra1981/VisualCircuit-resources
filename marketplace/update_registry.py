@@ -20,10 +20,8 @@ def main():
             basename = os.path.basename(filepath)
             block_id = os.path.splitext(basename)[0]
             
-            # The download URL for the raw file on GitHub pages or raw content
-            # For GitHub pages it would be relative to the repo root
-            # Let's assume the blocks are served at /blocks/filename
-            url = f"/blocks/{basename}"
+            # The download URL for the raw file on GitHub
+            url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/{basename}"
             
             block_entry = {
                 "id": block_id,
