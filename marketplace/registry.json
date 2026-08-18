@@ -1,1 +1,17 @@
-{"blocks": []}
+{
+  "blocks": [
+    {
+      "id": "Laser_Mapping",
+      "name": "Laser_Mapping",
+      "author": "JdeRobot ",
+      "version": "1.0.0",
+      "description": "This is the circuit for the Laser mapping in the RA",
+      "category": "Control Systems",
+      "tags": [
+        "cv2",
+        "laser"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Laser_Mapping.vc3"
+    }
+  ]
+}
