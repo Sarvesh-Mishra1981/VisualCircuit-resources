@@ -114,10 +114,14 @@ def generate_block_page(block_metadata, code, json_data, template):
             <p><strong>Parameters:</strong> {params_str}</p>
         </div>
     </section>
-    <section>
-        <h2 class="section-title" id="header-classes">Source Code</h2>
-        <input id="{name}-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-        <label class="view-source-button" for="{name}-view-source"><span>View Source</span></label>
+    <section id="main">
+        <input id="main-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">main</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="main-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#main"></a>
         <div class="pdoc-code codehilite"><pre><span></span><code>{escaped_code}</code></pre></div>
     </section>
 </main>"""
