@@ -133,16 +133,35 @@ def update_index(registry):
     for custom_section in soup.find_all('section', class_='custom-block'):
         custom_section.decompose()
 
-    # Find the "Submodules" list where all block links live
-    submodules_header = soup.find('h2', string='Submodules')
-    if not submodules_header:
-        print("Could not find Submodules header in Blocks.html")
+    # Find the nav sidebar where we will add the Custom Blocks section
+    nav = soup.find('nav', class_='pdoc')
+    if not nav:
+        print("Could not find nav sidebar in Blocks.html")
         return
         
-    submodules_list = submodules_header.find_next_sibling('ul')
-    if not submodules_list:
-        print("Could not find Submodules list in Blocks.html")
+    nav_div = nav.find('div')
+    if not nav_div:
         return
+
+    # Find or create the "Custom Blocks" header and list
+    custom_blocks_header = soup.find('h2', string='Custom Blocks')
+    custom_blocks_list = None
+    
+    if not custom_blocks_header:
+        custom_blocks_header = soup.new_tag('h2')
+        custom_blocks_header.string = "Custom Blocks"
+        custom_blocks_list = soup.new_tag('ul')
+        
+        # Insert before the attribution tag (the pdoc logo at the bottom of the sidebar)
+        attribution = nav_div.find('a', class_='attribution')
+        if attribution:
+            attribution.insert_before(custom_blocks_header)
+            attribution.insert_before(custom_blocks_list)
+        else:
+            nav_div.append(custom_blocks_header)
+            nav_div.append(custom_blocks_list)
+    else:
+        custom_blocks_list = custom_blocks_header.find_next_sibling('ul')
 
     # Add a new link (<li><a>) for each custom block in the registry if it doesn't already exist
     for block in registry.get('blocks', []):
@@ -151,7 +170,7 @@ def update_index(registry):
         
         # Check if the link is already in the list
         exists = False
-        for a in submodules_list.find_all('a'):
+        for a in custom_blocks_list.find_all('a'):
             if a.get('href') == link_href:
                 exists = True
                 break
@@ -162,8 +181,8 @@ def update_index(registry):
             new_a = soup.new_tag('a', href=link_href)
             new_a.string = name
             new_li.append(new_a)
-            submodules_list.append(new_li)
-            print(f"Added link to Blocks.html: {name}")
+            custom_blocks_list.append(new_li)
+            print(f"Added link to Blocks.html sidebar: {name}")
 
     # Save the updated index file
     with open(HTML_PATH, 'w') as f:
@@ -184,27 +203,29 @@ def main():
     # Iterate over all custom blocks listed in the marketplace registry
     for block in registry.get('blocks', []):
         name = block.get('name', 'Unknown')
+        block_id = block.get('id', name)
         
-        # We attempt to read the .json payload of the block to extract its source code
-        json_filename = f"{name}.json"
-        json_path = os.path.join(CUSTOM_BLOCKS_DIR, json_filename)
-        
+        # We attempt to read the payload of the block to extract its source code
+        # We check for both .vc3 and .json extensions
         code = "# Code not found"
         json_data = None
         
-        if os.path.exists(json_path):
-            try:
-                with open(json_path, 'r') as f:
-                    json_data = json.load(f)
-                    
-                    # Dig into the JSON structure to find the user's custom python code
-                    components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
-                    for c in components:
-                        if c.get('type') == 'basic.code':
-                            code = c.get('data', {}).get('code', '')
-                            break
-            except Exception as e:
-                print(f"Error parsing json for {name}: {e}")
+        for ext in ['.vc3', '.json']:
+            json_path = os.path.join(CUSTOM_BLOCKS_DIR, f"{block_id}{ext}")
+            if os.path.exists(json_path):
+                try:
+                    with open(json_path, 'r') as f:
+                        json_data = json.load(f)
+                        
+                        # Dig into the JSON structure to find the user's custom python code
+                        components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
+                        for c in components:
+                            if c.get('type') == 'basic.code':
+                                code = c.get('data', {}).get('code', '')
+                                break
+                    break
+                except Exception as e:
+                    print(f"Error parsing {json_path}: {e}")
                 
         # Generate the standalone HTML documentation page for this block
         generate_block_page(block, code, json_data, template)
