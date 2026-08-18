@@ -41,7 +41,8 @@ def main():
             
             # Construct the raw download URL that the React frontend will use to fetch this block
             # NOTE: For official production deployment, this points to JdeRobot's main branch.
-            url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/{basename}"
+            repo = os.environ.get('GITHUB_REPOSITORY', 'JdeRobot/VisualCircuit-resources')
+            url = f"https://raw.githubusercontent.com/{repo}/main/custom_blocks/{basename}"
             
             # Build the registry entry exactly as the frontend Validator expects it
             block_entry = {

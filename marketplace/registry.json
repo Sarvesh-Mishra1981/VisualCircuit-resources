@@ -11,7 +11,7 @@
         "cv2",
         "laser"
       ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Laser_Mapping.vc3"
+      "url": "https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/Laser_Mapping.vc3"
     },
     {
       "id": "Obstable Avoidance",
@@ -23,7 +23,7 @@
       "tags": [
         "laser"
       ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Obstable Avoidance.vc3"
+      "url": "https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/Obstable Avoidance.vc3"
     }
   ]
 }

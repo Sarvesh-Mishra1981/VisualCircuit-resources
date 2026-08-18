@@ -7,7 +7,7 @@ on:
       - 'custom_blocks/**/*.vc3'
   push:
     branches:
-      - test/e2e-integration
+      - main
     paths:
       - 'custom_blocks/**/*.json'
       - 'custom_blocks/**/*.vc3'
@@ -45,7 +45,7 @@ jobs:
 
   update-registry:
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/test/e2e-integration'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
