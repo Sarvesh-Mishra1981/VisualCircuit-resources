@@ -62,56 +62,241 @@
             <p><strong>Parameters:</strong> None</p>
         </div>
     </section>
-    <section>
-        <h2 class="section-title" id="header-classes">Source Code</h2>
-        <div class="pdoc-code codehilite"><pre><span></span><code>import math
-import rclpy
 
-from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data
-from sensor_msgs.msg import LaserScan
+    <section id="block_1">
+        <input id="block_1-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">block_1</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="block_1-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#block_1"></a>
+        <div class="pdoc-code codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">qos_profile_sensor_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaserScan</span>
 
 
-def main(inputs, outputs, parameters, synchronise):
-    if not rclpy.ok():
-        rclpy.init(args=None)
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">synchronise</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">ok</span><span class="p">():</span>
+        <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-    class LaserReader(Node):
-        def __init__(self):
-            super().__init__(&quot;vc_laser_reader&quot;)
+    <span class="k">class</span><span class="w"> </span><span class="nc">LaserReader</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">"vc_laser_reader"</span><span class="p">)</span>
 
-            self.front_distance = 10.0
-            self.laser_ready = False
+            <span class="bp">self</span><span class="o">.</span><span class="n">front_distance</span> <span class="o">=</span> <span class="mf">10.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">laser_ready</span> <span class="o">=</span> <span class="kc">False</span>
 
-            self.create_subscription(
-                LaserScan,
-                &quot;/turtlebot3/laser/scan&quot;,
-                self.scan_callback,
-                qos_profile_sensor_data,
-            )
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span>
+                <span class="n">LaserScan</span><span class="p">,</span>
+                <span class="s2">"/turtlebot3/laser/scan"</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scan_callback</span><span class="p">,</span>
+                <span class="n">qos_profile_sensor_data</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        def scan_callback(self, msg):
-            values = []
+        <span class="k">def</span><span class="w"> </span><span class="nf">scan_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
 
-            for index, distance in enumerate(msg.ranges):
-                angle = msg.angle_min + index * msg.angle_increment
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">distance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">):</span>
+                <span class="n">angle</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angle_min</span> <span class="o">+</span> <span class="n">index</span> <span class="o">*</span> <span class="n">msg</span><span class="o">.</span><span class="n">angle_increment</span>
 
-                if -0.35 &lt;= angle &lt;= 0.35:
-                    if math.isfinite(distance) and distance &gt; 0.05:
-                        values.append(distance)
+                <span class="k">if</span> <span class="o">-</span><span class="mf">0.35</span> <span class="o">&lt;=</span> <span class="n">angle</span> <span class="o">&lt;=</span> <span class="mf">0.35</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span> <span class="ow">and</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">:</span>
+                        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
 
-            self.front_distance = min(values) if values else 10.0
-            self.laser_ready = True
+            <span class="bp">self</span><span class="o">.</span><span class="n">front_distance</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">values</span> <span class="k">else</span> <span class="mf">10.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">laser_ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    node = LaserReader()
+    <span class="n">node</span> <span class="o">=</span> <span class="n">LaserReader</span><span class="p">()</span>
 
-    while True:
-        rclpy.spin_once(node, timeout_sec=0.0)
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">rclpy</span><span class="o">.</span><span class="n">spin_once</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">timeout_sec</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 
-        outputs.share_number(&quot;front_distance&quot;, node.front_distance)
-        outputs.share_number(&quot;laser_ready&quot;, 1.0 if node.laser_ready else 0.0)
+        <span class="n">outputs</span><span class="o">.</span><span class="n">share_number</span><span class="p">(</span><span class="s2">"front_distance"</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">front_distance</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="o">.</span><span class="n">share_number</span><span class="p">(</span><span class="s2">"laser_ready"</span><span class="p">,</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">laser_ready</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
 
-        synchronise()</code></pre></div>
+        <span class="n">synchronise</span><span class="p">()</span>
+</code></pre></div>
+    </section>
+    <section id="block_2">
+        <input id="block_2-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">block_2</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="block_2-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#block_2"></a>
+        <div class="pdoc-code codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">synchronise</span><span class="p">):</span>
+    <span class="n">FORWARD</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">TURN_LEFT</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">TURN_RIGHT</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">UTURN_LEFT</span> <span class="o">=</span> <span class="mf">3.0</span>
+    <span class="n">UTURN_RIGHT</span> <span class="o">=</span> <span class="mf">4.0</span>
+    <span class="n">STOP</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">STOP</span>
+
+    <span class="n">stop_distance</span> <span class="o">=</span> <span class="mf">0.60</span>
+    <span class="n">clear_distance</span> <span class="o">=</span> <span class="mf">0.90</span>
+
+    <span class="n">turn_ticks</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">normal_turn_ticks</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">uturn_ticks</span> <span class="o">=</span> <span class="mi">80</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">distance_wire</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">read_number</span><span class="p">(</span><span class="s2">"front_distance"</span><span class="p">)</span>
+        <span class="n">ready_wire</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">read_number</span><span class="p">(</span><span class="s2">"laser_ready"</span><span class="p">)</span>
+
+        <span class="n">laser_ready</span> <span class="o">=</span> <span class="n">ready_wire</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">ready_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">laser_ready</span> <span class="ow">or</span> <span class="n">distance_wire</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">STOP</span>
+            <span class="n">turn_ticks</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">front_distance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">distance_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">STOP</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">FORWARD</span>
+
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">FORWARD</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">front_distance</span> <span class="o">&lt;</span> <span class="n">stop_distance</span><span class="p">:</span>
+                    <span class="n">choice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span>
+                        <span class="n">TURN_LEFT</span><span class="p">,</span>
+                        <span class="n">TURN_RIGHT</span><span class="p">,</span>
+                        <span class="n">TURN_LEFT</span><span class="p">,</span>
+                        <span class="n">TURN_RIGHT</span><span class="p">,</span>
+                        <span class="n">UTURN_LEFT</span><span class="p">,</span>
+                        <span class="n">UTURN_RIGHT</span><span class="p">,</span>
+                    <span class="p">])</span>
+
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">choice</span>
+
+                    <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="n">UTURN_LEFT</span><span class="p">,</span> <span class="n">UTURN_RIGHT</span><span class="p">]:</span>
+                        <span class="n">turn_ticks</span> <span class="o">=</span> <span class="n">uturn_ticks</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">turn_ticks</span> <span class="o">=</span> <span class="n">normal_turn_ticks</span>
+
+            <span class="k">elif</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="n">TURN_LEFT</span><span class="p">,</span> <span class="n">TURN_RIGHT</span><span class="p">,</span> <span class="n">UTURN_LEFT</span><span class="p">,</span> <span class="n">UTURN_RIGHT</span><span class="p">]:</span>
+                <span class="n">turn_ticks</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">turn_ticks</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">front_distance</span> <span class="o">&gt;</span> <span class="n">clear_distance</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">FORWARD</span>
+
+                <span class="k">elif</span> <span class="n">turn_ticks</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">30</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">FORWARD</span>
+
+        <span class="n">outputs</span><span class="o">.</span><span class="n">share_number</span><span class="p">(</span><span class="s2">"state_code"</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">synchronise</span><span class="p">()</span>
+</code></pre></div>
+    </section>
+    <section id="block_3">
+        <input id="block_3-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">block_3</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="block_3-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#block_3"></a>
+        <div class="pdoc-code codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">synchronise</span><span class="p">):</span>
+    <span class="n">FORWARD</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">TURN_LEFT</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">TURN_RIGHT</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">UTURN_LEFT</span> <span class="o">=</span> <span class="mf">3.0</span>
+    <span class="n">UTURN_RIGHT</span> <span class="o">=</span> <span class="mf">4.0</span>
+
+    <span class="n">forward_speed</span> <span class="o">=</span> <span class="mf">0.70</span>
+    <span class="n">turn_speed</span> <span class="o">=</span> <span class="mf">1.25</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">state_wire</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">read_number</span><span class="p">(</span><span class="s2">"state_code"</span><span class="p">)</span>
+
+        <span class="n">linear_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">angular_z</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">if</span> <span class="n">state_wire</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">state_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">FORWARD</span><span class="p">:</span>
+                <span class="n">linear_x</span> <span class="o">=</span> <span class="n">forward_speed</span>
+                <span class="n">angular_z</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">TURN_LEFT</span><span class="p">:</span>
+                <span class="n">linear_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">angular_z</span> <span class="o">=</span> <span class="n">turn_speed</span>
+
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">TURN_RIGHT</span><span class="p">:</span>
+                <span class="n">linear_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">angular_z</span> <span class="o">=</span> <span class="o">-</span><span class="n">turn_speed</span>
+
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">UTURN_LEFT</span><span class="p">:</span>
+                <span class="n">linear_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">angular_z</span> <span class="o">=</span> <span class="n">turn_speed</span>
+
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">UTURN_RIGHT</span><span class="p">:</span>
+                <span class="n">linear_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">angular_z</span> <span class="o">=</span> <span class="o">-</span><span class="n">turn_speed</span>
+
+        <span class="n">outputs</span><span class="o">.</span><span class="n">share_number</span><span class="p">(</span><span class="s2">"linear_x"</span><span class="p">,</span> <span class="n">linear_x</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="o">.</span><span class="n">share_number</span><span class="p">(</span><span class="s2">"angular_z"</span><span class="p">,</span> <span class="n">angular_z</span><span class="p">)</span>
+
+        <span class="n">synchronise</span><span class="p">()</span>
+</code></pre></div>
+    </section>
+    <section id="block_4">
+        <input id="block_4-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">block_4</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="block_4-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#block_4"></a>
+        <div class="pdoc-code codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Twist</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">synchronise</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">ok</span><span class="p">():</span>
+        <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">VelocityPublisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">"vc_velocity_publisher"</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span>
+                <span class="n">Twist</span><span class="p">,</span>
+                <span class="s2">"/turtlebot3/cmd_vel"</span><span class="p">,</span>
+                <span class="mi">10</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">send_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linear_x</span><span class="p">,</span> <span class="n">angular_z</span><span class="p">):</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+            <span class="n">command</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linear_x</span><span class="p">)</span>
+            <span class="n">command</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">angular_z</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">VelocityPublisher</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">linear_wire</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">read_number</span><span class="p">(</span><span class="s2">"linear_x"</span><span class="p">)</span>
+        <span class="n">angular_wire</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">read_number</span><span class="p">(</span><span class="s2">"angular_z"</span><span class="p">)</span>
+
+        <span class="n">linear_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linear_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">linear_wire</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">angular_z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">angular_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">angular_wire</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+        <span class="n">node</span><span class="o">.</span><span class="n">send_velocity</span><span class="p">(</span><span class="n">linear_x</span><span class="p">,</span> <span class="n">angular_z</span><span class="p">)</span>
+
+        <span class="n">synchronise</span><span class="p">()</span>
+</code></pre></div>
     </section>
 </main>
 <script>
