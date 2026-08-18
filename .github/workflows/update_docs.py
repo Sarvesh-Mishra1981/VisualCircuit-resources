@@ -108,6 +108,8 @@ def generate_block_page(block_metadata, code, json_data, template):
     </section>
     <section>
         <h2 class="section-title" id="header-classes">Source Code</h2>
+        <input id="{name}-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <label class="view-source-button" for="{name}-view-source"><span>View Source</span></label>
         <div class="pdoc-code codehilite"><pre><span></span><code>{escaped_code}</code></pre></div>
     </section>
 </main>"""
@@ -205,9 +207,8 @@ def main():
         name = block.get('name', 'Unknown')
         block_id = block.get('id', name)
         
-        # We attempt to read the payload of the block to extract its source code
-        # We check for both .vc3 and .json extensions
-        code = "# Code not found"
+        # We We check for both .vc3 and .json extensions
+        code = ""
         json_data = None
         
         for ext in ['.vc3', '.json']:
@@ -219,10 +220,17 @@ def main():
                         
                         # Dig into the JSON structure to find the user's custom python code
                         components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
-                        for c in components:
+                        code_blocks = []
+                        for i, c in enumerate(components):
                             if c.get('type') == 'basic.code':
-                                code = c.get('data', {}).get('code', '')
-                                break
+                                block_code = c.get('data', {}).get('code', '')
+                                if block_code:
+                                    code_blocks.append(f"# --- Python Block {i + 1} ---\n{block_code}")
+                        
+                        if code_blocks:
+                            code = "\n\n".join(code_blocks)
+                        else:
+                            code = "# No Python code found in this custom block"
                     break
                 except Exception as e:
                     print(f"Error parsing {json_path}: {e}")
