@@ -64,7 +64,7 @@ jobs:
 
       - name: Install Documentation Dependencies
         run: |
-          pip install beautifulsoup4
+          pip install beautifulsoup4 pygments
           
       - name: Run Documentation Updater
         run: |

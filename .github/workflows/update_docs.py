@@ -87,8 +87,16 @@ def generate_block_page(block_metadata, code, json_data, template):
     outputs_str = ', '.join(outputs) if outputs else 'None'
     params_str = ', '.join(parameters) if parameters else 'None'
 
-    # Escape the Python code so it displays safely in the HTML <pre> block
-    escaped_code = html.escape(code)
+    # Attempt to highlight the Python code using pygments if available
+    try:
+        from pygments import highlight
+        from pygments.lexers import PythonLexer
+        from pygments.formatters import HtmlFormatter
+        # Use nowrap to generate just the raw spans so we can wrap it exactly like pdoc
+        escaped_code = highlight(code, PythonLexer(), HtmlFormatter(nowrap=True))
+    except ImportError:
+        # Fallback to plain escaped text if pygments is not installed locally
+        escaped_code = html.escape(code)
 
     # Build the main content HTML structure mimicking pdoc3 output
     main_content = f"""<main class="pdoc">
