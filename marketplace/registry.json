@@ -12,6 +12,18 @@
         "laser"
       ],
       "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Laser_Mapping.vc3"
+    },
+    {
+      "id": "Obstable Avoidance",
+      "name": "Obstable Avoidance",
+      "author": "Jderobot",
+      "version": "1.0.0",
+      "description": "This block is for the obstacle avoidance ",
+      "category": "Laser",
+      "tags": [
+        "laser"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Obstable Avoidance.vc3"
     }
   ]
 }
