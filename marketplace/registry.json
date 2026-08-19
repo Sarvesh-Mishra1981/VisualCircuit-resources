@@ -1,29 +1,17 @@
 {
   "blocks": [
     {
-      "id": "Laser_Mapping",
-      "name": "Laser_Mapping",
+      "id": "Laser_Mapping_block",
+      "name": "Laser_Mapping_block",
       "author": "JdeRobot ",
       "version": "1.0.0",
-      "description": "This is the circuit for the Laser mapping in the RA",
+      "description": "This is laser mapping block ",
       "category": "Control Systems",
       "tags": [
-        "cv2",
-        "laser"
+        "laser",
+        "cmd_vel"
       ],
-      "url": "https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/Laser_Mapping.vc3"
-    },
-    {
-      "id": "Obstable Avoidance",
-      "name": "Obstable Avoidance",
-      "author": "Jderobot",
-      "version": "1.0.0",
-      "description": "This block is for the obstacle avoidance ",
-      "category": "Laser",
-      "tags": [
-        "laser"
-      ],
-      "url": "https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/Obstable Avoidance.vc3"
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/Laser_Mapping_block.vc3"
     }
   ]
 }
