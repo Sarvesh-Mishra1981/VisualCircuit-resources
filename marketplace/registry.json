@@ -1,6 +1,18 @@
 {
   "blocks": [
     {
+      "id": "Obstable_Avoidance_Block",
+      "name": "Obstable_Avoidance_Block",
+      "author": "Jderobot",
+      "version": "1.0.0",
+      "description": "Obstacle Avoidance block for the proper navigation on the track",
+      "category": "Laser, Autonomous",
+      "tags": [
+        "laser"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Obstable_Avoidance_Block.vc3"
+    },
+    {
       "id": "Laser_Mapping_block",
       "name": "Laser_Mapping_block",
       "author": "JdeRobot ",
