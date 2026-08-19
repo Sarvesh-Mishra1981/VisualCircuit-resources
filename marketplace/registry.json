@@ -11,7 +11,7 @@
         "laser",
         "cmd_vel"
       ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/Laser_Mapping_block.vc3"
+      "url": "https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/Laser_Mapping_block.vc3"
     }
   ]
 }
